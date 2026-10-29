@@ -100,11 +100,11 @@ FlatConnect-Final/
 ### Step 2: Workspace Location & URL Access
 The project is configured so it can be opened using:
 ```
-http://localhost/FlatConnect-Final/
+http://localhost/FlatConnect-Final/FlatConnect/
 ```
 
-- If you cloned the repository or extracted it, ensure the folder `FlatConnect-Final` is located in your XAMPP web root:
-  `C:\xampp\htdocs\FlatConnect-Final`
+- If you cloned the repository or extracted it, ensure the repository folder `FlatConnect-Final` is located in your XAMPP web root, with the application inside its `FlatConnect` subfolder:
+   `C:\xampp\htdocs\FlatConnect-Final\FlatConnect`
   *(Note: A Windows Directory Junction has already been established between your workspace and `C:\xampp\htdocs\FlatConnect-Final`).*
 
 ### Step 3: Import the Database via phpMyAdmin

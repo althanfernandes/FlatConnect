@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="grad8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EA580C" />
+      <stop offset="100%" stop-color="#C2410C" />
+    </linearGradient>
+    <linearGradient id="sky8" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0" />
+      <stop offset="100%" stop-color="#F8FAFC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Sky / Room -->
+  <rect width="600" height="400" fill="url(#sky8)" />
+
+  <!-- Modern Architectural Facade -->
+  <rect x="0" y="280" width="600" height="120" fill="#CBD5E1" />
+  <rect x="50" y="70" width="500" height="260" rx="12" fill="url(#grad8)" />
+
+  <!-- Windows Grid -->
+  <rect x="90" y="110" width="80" height="60" rx="6" fill="#FFFFFF" opacity="0.85" />
+  <rect x="200" y="110" width="80" height="60" rx="6" fill="#FFFFFF" opacity="0.9" />
+  <rect x="310" y="110" width="80" height="60" rx="6" fill="#FFFFFF" opacity="0.8" />
+  <rect x="420" y="110" width="80" height="60" rx="6" fill="#FFFFFF" opacity="0.85" />
+
+  <rect x="90" y="200" width="80" height="60" rx="6" fill="#FFFFFF" opacity="0.9" />
+  <rect x="200" y="200" width="80" height="60" rx="6" fill="#FFFFFF" opacity="0.75" />
+  <rect x="310" y="200" width="80" height="60" rx="6" fill="#FFFFFF" opacity="0.9" />
+  <rect x="420" y="200" width="80" height="60" rx="6" fill="#FFFFFF" opacity="0.85" />
+
+  <!-- Balcony Accent Line -->
+  <rect x="50" y="180" width="500" height="8" fill="#FB923C" opacity="0.9" />
+  <rect x="50" y="270" width="500" height="8" fill="#FB923C" opacity="0.9" />
+
+  <!-- Entrance Doorway -->
+  <rect x="260" y="278" width="80" height="52" rx="4" fill="#0F172A" />
+
+  <!-- Overlay Title Card Banner -->
+  <rect x="40" y="310" width="520" height="70" rx="10" fill="#FFFFFF" opacity="0.95" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))" />
+  <circle cx="75" cy="345" r="18" fill="#FB923C" />
+  <text x="75" y="351" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="14" font-weight="bold" fill="#0F172A" text-anchor="middle">FC</text>
+  <text x="110" y="340" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="16" font-weight="bold" fill="#0F172A">City Nest</text>
+  <text x="110" y="360" font-family="'Inter', Arial, sans-serif" font-size="13" fill="#64748B">1BHK Metro Living • Pune</text>
+</svg>

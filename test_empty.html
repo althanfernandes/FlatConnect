@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FlatConnect - Direct Flat, PG & Roommate Finder in Pune. Connect directly with property owners and tenants without brokers.">
+    <title>Find My Ideal Flat - Student Recommendation Wizard | FlatConnect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons for clean, accessible symbols -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- FlatConnect Custom Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="navbar">
+    <div class="container nav-container">
+        <!-- Brand Logo -->
+        <a href="index.php" class="nav-brand">
+            <span class="brand-icon">
+                <i class="fa-solid fa-house-chimney"></i>
+            </span>
+            <span>Flat<span class="brand-tag">Connect</span></span>
+        </a>
+
+        <!-- Mobile Toggle Button -->
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Navigation Links -->
+        <nav class="nav-menu">
+                            <a href="ideal-flat.php" class="nav-link active">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Ideal Flat
+                </a>
+                <a href="index.php" class="btn btn-secondary btn-sm">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login / Register
+                </a>
+                    </nav>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="container">
+        <!-- Breadcrumb & Header -->
+        <div style="margin-bottom: 24px;">
+            <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 6px;">
+                <a href="home.php">Home</a> / <a href="properties.php">Properties</a> / <span>Find My Ideal Flat</span>
+            </div>
+        </div>
+
+        <!-- Wizard Card -->
+        <div class="wizard-card" id="wizardCard">
+            <div class="wizard-header">
+                <span class="wizard-badge">
+                    <i class="fa-solid fa-graduation-cap"></i> Student Accommodation Recommendation Wizard
+                </span>
+                <h1 class="wizard-title">Find My Ideal Flat</h1>
+                <p class="wizard-subtitle">
+                    Answer 6 quick questions about your budget, locality, and lifestyle. We will match you directly with the best verified flats, PGs, and rooms in Pune with zero brokerage.
+                </p>
+            </div>
+
+            <!-- Stepper Progress Bar -->
+            <div class="wizard-stepper">
+                <div class="wizard-stepper-line"></div>
+                <div class="wizard-stepper-progress" id="stepperProgress" style="width: 0%;"></div>
+
+                <!-- Step 1 Indicator -->
+                <button type="button" class="stepper-item active" id="stepIndicator1" onclick="jumpToStep(1)">
+                    <div class="stepper-circle">1</div>
+                    <span class="stepper-label">Budget & Room</span>
+                </button>
+
+                <!-- Step 2 Indicator -->
+                <button type="button" class="stepper-item" id="stepIndicator2" onclick="jumpToStep(2)">
+                    <div class="stepper-circle">2</div>
+                    <span class="stepper-label">Type & Locality</span>
+                </button>
+
+                <!-- Step 3 Indicator -->
+                <button type="button" class="stepper-item" id="stepIndicator3" onclick="jumpToStep(3)">
+                    <div class="stepper-circle">3</div>
+                    <span class="stepper-label">Furnishing & Amenities</span>
+                </button>
+            </div>
+
+            <!-- Multi-step Form -->
+            <form id="idealFlatForm" action="ideal-flat.php" method="GET">
+                <input type="hidden" name="submitted" value="1">
+
+                <!-- STEP 1: Monthly Rent Budget & Room Sharing -->
+                <div class="wizard-step active" id="stepContainer1">
+                    <div class="step-heading">
+                        <i class="fa-solid fa-wallet" style="color:var(--secondary);"></i> Step 1: Budget & Room Sharing
+                    </div>
+                    <p class="step-desc">Specify your target monthly budget and room sharing preference.</p>
+
+                    <!-- Question 1: Monthly Rent Budget -->
+                    <div class="form-group">
+                        <label for="budgetInput">1. Monthly Rent Budget (₹)</label>
+                        <div class="budget-card-wrapper">
+                            <div class="budget-val-display">
+                                <span class="text-muted" style="font-size:0.9rem;">Maximum Monthly Rent:</span>
+                                <span class="budget-amount" id="budgetDisplay">₹3,000</span>
+                            </div>
+
+                            <input type="range" class="budget-slider" id="budgetSlider" min="3000" max="35000" step="500" value="3000">
+
+                            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+                                <div style="position:relative; width:180px;">
+                                    <span style="position:absolute; left:12px; top:11px; font-weight:700; color:var(--text-muted);">₹</span>
+                                    <input type="number" name="budget" id="budgetInput" class="form-control" style="padding-left:28px; font-weight:700;" min="1000" max="60000" value="3000">
+                                </div>
+                                <span class="text-muted" style="font-size:0.85rem;">Or click a student quick-preset below:</span>
+                            </div>
+
+                            <!-- Student Budget Preset Chips -->
+                            <div class="budget-chips">
+                                <button type="button" class="budget-chip" data-amount="6000">₹6,000 (Budget PG)</button>
+                                <button type="button" class="budget-chip" data-amount="8000">₹8,000 (Student PG)</button>
+                                <button type="button" class="budget-chip" data-amount="12000">₹12,000 (1RK / 1BHK)</button>
+                                <button type="button" class="budget-chip" data-amount="16000">₹16,000 (2BHK Share)</button>
+                                <button type="button" class="budget-chip" data-amount="22000">₹22,000+ (Premium)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 6: Single or Shared Room -->
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label>6. Room Sharing Preference</label>
+                        <p class="form-help" style="margin-bottom:10px;">Do you prefer a private bedroom to study, or a shared room to split living costs?</p>
+                        
+                        <div class="preference-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                            <!-- Single Room -->
+                            <label class="preference-option">
+                                <input type="radio" name="sharing" value="single" >
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-bed"></i>
+                                    <span class="pref-title">Single / Private Room</span>
+                                    <span class="pref-desc">Dedicated room for quiet study & personal privacy</span>
+                                </div>
+                            </label>
+
+                            <!-- Shared Room -->
+                            <label class="preference-option">
+                                <input type="radio" name="sharing" value="shared" >
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-people-roof"></i>
+                                    <span class="pref-title">Shared Room</span>
+                                    <span class="pref-desc">2 or 3 sharing to split rent, electricity & food costs</span>
+                                </div>
+                            </label>
+
+                            <!-- Any / Flexible -->
+                            <label class="preference-option">
+                                <input type="radio" name="sharing" value="any" checked>
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-shuffle"></i>
+                                    <span class="pref-title">Any / Flexible</span>
+                                    <span class="pref-desc">Open to both private and shared accommodation</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Accommodation Type & Locality -->
+                <div class="wizard-step" id="stepContainer2">
+                    <div class="step-heading">
+                        <i class="fa-solid fa-map-location-dot" style="color:var(--secondary);"></i> Step 2: Accommodation Type & Locality
+                    </div>
+                    <p class="step-desc">Select the type of rental property and your preferred area in Pune.</p>
+
+                    <!-- Question 2: Preferred Accommodation Type -->
+                    <div class="form-group">
+                        <label>2. Preferred Accommodation Type</label>
+                        <div class="preference-grid">
+                            <!-- Flat / Apartment -->
+                            <label class="preference-option">
+                                <input type="radio" name="type" value="Flat" checked>
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span class="pref-title">Flat / Apartment</span>
+                                    <span class="pref-desc">1BHK, 2BHK or 3BHK for group living</span>
+                                </div>
+                            </label>
+
+                            <!-- PG / Hostel -->
+                            <label class="preference-option">
+                                <input type="radio" name="type" value="PG" >
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-hotel"></i>
+                                    <span class="pref-title">PG / Hostel</span>
+                                    <span class="pref-desc">Hassle-free stay with meals & housekeeping</span>
+                                </div>
+                            </label>
+
+                            <!-- Independent Room / 1RK -->
+                            <label class="preference-option">
+                                <input type="radio" name="type" value="Room" >
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-door-open"></i>
+                                    <span class="pref-title">Private Room / 1RK</span>
+                                    <span class="pref-desc">Affordable independent compact room</span>
+                                </div>
+                            </label>
+
+                            <!-- Any Type -->
+                            <label class="preference-option">
+                                <input type="radio" name="type" value="Any" >
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                    <span class="pref-title">Any Accommodation</span>
+                                    <span class="pref-desc">Show top matches from all categories</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 3: Preferred Locality -->
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label for="localitySelect">3. Preferred Locality in Pune</label>
+                        <select name="locality" id="localitySelect" class="form-control" style="font-size:1rem; padding:12px;">
+                            <option value="Any" >🌐 Any Locality in Pune (Show Best City-wide Matches)</option>
+                            <option value="Hinjewadi" >📍 Hinjewadi (Phase 1, 2 & 3 • Major IT Hub)</option>
+                            <option value="Wakad" >📍 Wakad (Datta Mandir, Kaspate Vasti • Highly Connected)</option>
+                            <option value="Tathawade" >📍 Tathawade (Near JSPM, Indira, DY Patil Campuses)</option>
+                            <option value="Baner" selected>📍 Baner (Balewadi High Street, Cafes & Metro Corridor)</option>
+                            <option value="Punawale" >📍 Punawale (Affordable Student Gated Societies)</option>
+                            <option value="Pimpri" >📍 Pimpri (Near Metro Station & Commercial Market)</option>
+                        </select>
+                        <p class="form-help">Tip: Tathawade and Wakad are the top choices for college students due to college proximity and low rents.</p>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Furnishing Preference & Required Amenities -->
+                <div class="wizard-step" id="stepContainer3">
+                    <div class="step-heading">
+                        <i class="fa-solid fa-couch" style="color:var(--secondary);"></i> Step 3: Furnishing & Required Amenities
+                    </div>
+                    <p class="step-desc">Pick your furnishing expectation and select the must-have amenities for your student stay.</p>
+
+                    <!-- Question 4: Furnishing Preference -->
+                    <div class="form-group">
+                        <label>4. Furnishing Preference</label>
+                        <div class="preference-grid">
+                            <label class="preference-option">
+                                <input type="radio" name="furnishing" value="Fully Furnished" >
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-couch"></i>
+                                    <span class="pref-title">Fully Furnished</span>
+                                    <span class="pref-desc">Beds, wardrobes, appliances ready to move in</span>
+                                </div>
+                            </label>
+
+                            <label class="preference-option">
+                                <input type="radio" name="furnishing" value="Semi-Furnished" >
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-kitchen-set"></i>
+                                    <span class="pref-title">Semi-Furnished</span>
+                                    <span class="pref-desc">Geyser, kitchen cabinets, lights & fans</span>
+                                </div>
+                            </label>
+
+                            <label class="preference-option">
+                                <input type="radio" name="furnishing" value="Unfurnished" >
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-box-open"></i>
+                                    <span class="pref-title">Unfurnished</span>
+                                    <span class="pref-desc">Maximum rent savings; bring own items</span>
+                                </div>
+                            </label>
+
+                            <label class="preference-option">
+                                <input type="radio" name="furnishing" value="Any" checked>
+                                <div class="preference-box">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span class="pref-title">Any Furnishing</span>
+                                    <span class="pref-desc">No specific furnishing restriction</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 5: Required Amenities -->
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label>5. Required Amenities (Select all that you need)</label>
+                        <p class="form-help" style="margin-bottom:12px;">Properties matching these facilities will receive a boost in recommendation scores.</p>
+                        
+                        <div class="amenity-checkbox-grid">
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="WiFi" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-wifi"></i>
+                                        <span>WiFi</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="Food Included" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-utensils"></i>
+                                        <span>Food Included</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="Washing Machine" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-soap"></i>
+                                        <span>Washing Machine</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="Geyser" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-shower"></i>
+                                        <span>Geyser</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="AC" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-snowflake"></i>
+                                        <span>AC</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="Power Backup" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-bolt"></i>
+                                        <span>Power Backup</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="RO Water" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-faucet-drip"></i>
+                                        <span>RO Water</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="Lift" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-elevator"></i>
+                                        <span>Lift</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="Parking" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-square-parking"></i>
+                                        <span>Parking</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="CCTV &amp; Security" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>CCTV &amp; Security</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="Attached Washroom" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-toilet"></i>
+                                        <span>Attached Washroom</span>
+                                    </div>
+                                </label>
+                                                            <label class="amenity-checkbox-card">
+                                    <input type="checkbox" name="amenities[]" value="Study Table" >
+                                    <div class="amenity-checkbox-box">
+                                        <i class="fa-solid fa-book-open-reader"></i>
+                                        <span>Study Table</span>
+                                    </div>
+                                </label>
+                                                    </div>
+                    </div>
+                </div>
+
+                <!-- Wizard Navigation & Controls -->
+                <div class="wizard-actions">
+                    <div class="wizard-actions-left">
+                        <button type="button" class="btn btn-outline" id="prevBtn" onclick="navigateStep(-1)" style="display:none;">
+                            <i class="fa-solid fa-arrow-left"></i> Previous
+                        </button>
+                        <button type="button" class="btn btn-outline" id="resetBtn" onclick="resetWizard()">
+                            <i class="fa-solid fa-arrows-rotate"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="wizard-actions-right">
+                        <button type="button" class="btn btn-secondary" id="nextBtn" onclick="navigateStep(1)">
+                            Next <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submitWizardBtn" style="display:none;">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Find My Ideal Flat
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- RECOMMENDATION RESULTS SECTION -->
+        <section id="resultsSection" style="scroll-margin-top: 40px;">
+            <div class="results-header-box">
+                <div class="results-meta">
+                    <div style="font-size: 1.35rem; font-weight: 800; color: var(--primary);">
+                                                    Top Recommendations (8 Properties Found)
+                                            </div>
+                    <div class="results-tags-summary">
+                        <span class="summary-pill"><i class="fa-solid fa-wallet"></i> Budget: Max ₹3,000/mo</span>
+                        <span class="summary-pill"><i class="fa-solid fa-location-dot"></i> Locality: Baner</span>
+                        <span class="summary-pill"><i class="fa-solid fa-building"></i> Type: Flat</span>
+                        <span class="summary-pill"><i class="fa-solid fa-bed"></i> Sharing: Any</span>
+                                            </div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <a href="#wizardCard" class="btn btn-outline btn-sm" onclick="jumpToStep(1)">
+                        <i class="fa-solid fa-sliders"></i> Modify Preferences
+                    </a>
+                </div>
+            </div>
+
+            <!-- EMPTY STATE -->
+                            <!-- RECOMMENDATION CARDS GRID -->
+                <div class="property-grid">
+                                            <div class="property-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="property-img-wrapper">
+                                <img src="assets/images/properties/prop12.svg" alt="Maple Residency ÔÇô Baner" loading="lazy">
+                                
+                                                                    <span class="urgent-badge"><i class="fa-solid fa-bolt"></i> Urgent Vacancy</span>
+                                                                
+                                <span class="type-pill">Flat</span>
+
+                                <!-- Quick heart toggle on card image -->
+                                <button type="button" class="save-btn " data-id="12" title="Add to Wishlist">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+
+                            <div class="property-details">
+                                <!-- Top Row: Match Score & Location -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                    <span class="match-score-pill medium">
+                                        <i class="fa-solid fa-circle-check"></i> 70% Match
+                                    </span>
+                                    <div class="property-location" style="margin-bottom:0; font-size:0.85rem;">
+                                        <i class="fa-solid fa-location-dot"></i> Baner, Pune
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="property-title" style="font-size:1.15rem; margin-bottom:8px;">
+                                    <a href="property-details.php?id=12" style="color:var(--primary);">
+                                        Maple Residency ÔÇô Baner                                    </a>
+                                </h3>
+
+                                <!-- Rent Display -->
+                                <div class="property-price" style="margin-bottom:10px;">
+                                    ₹24,000 <span>/ month</span>
+                                    <span style="font-size:0.75rem; color:var(--secondary); background:var(--secondary-light); padding:2px 8px; border-radius:12px; margin-left:8px; font-weight:700;">
+                                        Zero Brokerage
+                                    </span>
+                                </div>
+
+                                <!-- Available Amenities Tags -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                                        Available Amenities:
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                            <i class="fa-solid fa-couch"></i> Fully Furnished                                        </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> WiFi                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> AC                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Smart TV                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Modular Kitchen                                            </span>
+                                                                                                                            <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px; color:var(--text-muted);">
+                                                +2 more
+                                            </span>
+                                                                            </div>
+                                </div>
+
+                                <!-- Reasons for the match breakdown -->
+                                <div class="match-reasons-box">
+                                    <div class="match-reasons-title">
+                                        <i class="fa-solid fa-sparkles"></i> Why this flat matches you:
+                                    </div>
+                                    <ul class="match-reasons-list">
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Exact locality match: Located right in Baner</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Matches preferred accommodation type: Flat</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Includes essential amenities: WiFi, AC, Smart TV, Modular Kitchen, Sofa Set, Reserved Parking</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Furnishing status: Fully Furnished</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Student friendly: Bachelors and students are welcome (No family restrictions)</span>
+                                            </li>
+                                                                            </ul>
+                                </div>
+
+                                <!-- Action Buttons: View Details & Add to Wishlist -->
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color);">
+                                    <a href="property-details.php?id=12" class="btn btn-secondary btn-sm" style="flex:1;">
+                                        <i class="fa-solid fa-eye"></i> View Details
+                                    </a>
+                                    
+                                    <button type="button" class="wishlist-toggle-btn  ideal-wishlist-action" data-id="12" title="Add to Wishlist">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span class="wishlist-label">Wishlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="property-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="property-img-wrapper">
+                                <img src="assets/images/properties/prop5.svg" alt="Urban Stay ÔÇô Baner" loading="lazy">
+                                
+                                                                
+                                <span class="type-pill">Flat</span>
+
+                                <!-- Quick heart toggle on card image -->
+                                <button type="button" class="save-btn " data-id="5" title="Add to Wishlist">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+
+                            <div class="property-details">
+                                <!-- Top Row: Match Score & Location -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                    <span class="match-score-pill medium">
+                                        <i class="fa-solid fa-circle-check"></i> 70% Match
+                                    </span>
+                                    <div class="property-location" style="margin-bottom:0; font-size:0.85rem;">
+                                        <i class="fa-solid fa-location-dot"></i> Baner, Pune
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="property-title" style="font-size:1.15rem; margin-bottom:8px;">
+                                    <a href="property-details.php?id=5" style="color:var(--primary);">
+                                        Urban Stay ÔÇô Baner                                    </a>
+                                </h3>
+
+                                <!-- Rent Display -->
+                                <div class="property-price" style="margin-bottom:10px;">
+                                    ₹28,000 <span>/ month</span>
+                                    <span style="font-size:0.75rem; color:var(--secondary); background:var(--secondary-light); padding:2px 8px; border-radius:12px; margin-left:8px; font-weight:700;">
+                                        Zero Brokerage
+                                    </span>
+                                </div>
+
+                                <!-- Available Amenities Tags -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                                        Available Amenities:
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                            <i class="fa-solid fa-couch"></i> Fully Furnished                                        </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> AC                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Modular Kitchen                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Sofa                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> TV                                            </span>
+                                                                                                                            <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px; color:var(--text-muted);">
+                                                +3 more
+                                            </span>
+                                                                            </div>
+                                </div>
+
+                                <!-- Reasons for the match breakdown -->
+                                <div class="match-reasons-box">
+                                    <div class="match-reasons-title">
+                                        <i class="fa-solid fa-sparkles"></i> Why this flat matches you:
+                                    </div>
+                                    <ul class="match-reasons-list">
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Exact locality match: Located right in Baner</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Matches preferred accommodation type: Flat</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Includes essential amenities: AC, Modular Kitchen, Sofa, TV, Power Backup, Clubhouse, 24x7 Security</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Furnishing status: Fully Furnished</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Student friendly: Bachelors and students are welcome (No family restrictions)</span>
+                                            </li>
+                                                                            </ul>
+                                </div>
+
+                                <!-- Action Buttons: View Details & Add to Wishlist -->
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color);">
+                                    <a href="property-details.php?id=5" class="btn btn-secondary btn-sm" style="flex:1;">
+                                        <i class="fa-solid fa-eye"></i> View Details
+                                    </a>
+                                    
+                                    <button type="button" class="wishlist-toggle-btn  ideal-wishlist-action" data-id="5" title="Add to Wishlist">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span class="wishlist-label">Wishlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="property-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="property-img-wrapper">
+                                <img src="assets/images/properties/prop8.svg" alt="City Nest ÔÇô Pimpri" loading="lazy">
+                                
+                                                                    <span class="urgent-badge"><i class="fa-solid fa-bolt"></i> Urgent Vacancy</span>
+                                                                
+                                <span class="type-pill">Flat</span>
+
+                                <!-- Quick heart toggle on card image -->
+                                <button type="button" class="save-btn " data-id="8" title="Add to Wishlist">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+
+                            <div class="property-details">
+                                <!-- Top Row: Match Score & Location -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                    <span class="match-score-pill medium">
+                                        <i class="fa-solid fa-circle-check"></i> 60% Match
+                                    </span>
+                                    <div class="property-location" style="margin-bottom:0; font-size:0.85rem;">
+                                        <i class="fa-solid fa-location-dot"></i> Pimpri, Pune
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="property-title" style="font-size:1.15rem; margin-bottom:8px;">
+                                    <a href="property-details.php?id=8" style="color:var(--primary);">
+                                        City Nest ÔÇô Pimpri                                    </a>
+                                </h3>
+
+                                <!-- Rent Display -->
+                                <div class="property-price" style="margin-bottom:10px;">
+                                    ₹11,000 <span>/ month</span>
+                                    <span style="font-size:0.75rem; color:var(--secondary); background:var(--secondary-light); padding:2px 8px; border-radius:12px; margin-left:8px; font-weight:700;">
+                                        Zero Brokerage
+                                    </span>
+                                </div>
+
+                                <!-- Available Amenities Tags -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                                        Available Amenities:
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                            <i class="fa-solid fa-couch"></i> Semi-Furnished                                        </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Geyser                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Kitchen Cabinets                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Lift                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Water Purifier                                            </span>
+                                                                                                                            <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px; color:var(--text-muted);">
+                                                +1 more
+                                            </span>
+                                                                            </div>
+                                </div>
+
+                                <!-- Reasons for the match breakdown -->
+                                <div class="match-reasons-box">
+                                    <div class="match-reasons-title">
+                                        <i class="fa-solid fa-sparkles"></i> Why this flat matches you:
+                                    </div>
+                                    <ul class="match-reasons-list">
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Convenient adjacent locality: Located in Pimpri (easy commute to Baner)</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Matches preferred accommodation type: Flat</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Includes essential amenities: Geyser, Kitchen Cabinets, Lift, Water Purifier, Bike Parking</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Furnishing status: Semi-Furnished</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Student friendly: Bachelors and students are welcome (No family restrictions)</span>
+                                            </li>
+                                                                            </ul>
+                                </div>
+
+                                <!-- Action Buttons: View Details & Add to Wishlist -->
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color);">
+                                    <a href="property-details.php?id=8" class="btn btn-secondary btn-sm" style="flex:1;">
+                                        <i class="fa-solid fa-eye"></i> View Details
+                                    </a>
+                                    
+                                    <button type="button" class="wishlist-toggle-btn  ideal-wishlist-action" data-id="8" title="Add to Wishlist">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span class="wishlist-label">Wishlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="property-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="property-img-wrapper">
+                                <img src="assets/images/properties/prop11.svg" alt="Peaceful Stay ÔÇô Punawale" loading="lazy">
+                                
+                                                                
+                                <span class="type-pill">Flat</span>
+
+                                <!-- Quick heart toggle on card image -->
+                                <button type="button" class="save-btn " data-id="11" title="Add to Wishlist">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+
+                            <div class="property-details">
+                                <!-- Top Row: Match Score & Location -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                    <span class="match-score-pill fair">
+                                        <i class="fa-solid fa-circle-check"></i> 45% Match
+                                    </span>
+                                    <div class="property-location" style="margin-bottom:0; font-size:0.85rem;">
+                                        <i class="fa-solid fa-location-dot"></i> Punawale, Pune
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="property-title" style="font-size:1.15rem; margin-bottom:8px;">
+                                    <a href="property-details.php?id=11" style="color:var(--primary);">
+                                        Peaceful Stay ÔÇô Punawale                                    </a>
+                                </h3>
+
+                                <!-- Rent Display -->
+                                <div class="property-price" style="margin-bottom:10px;">
+                                    ₹15,000 <span>/ month</span>
+                                    <span style="font-size:0.75rem; color:var(--secondary); background:var(--secondary-light); padding:2px 8px; border-radius:12px; margin-left:8px; font-weight:700;">
+                                        Zero Brokerage
+                                    </span>
+                                </div>
+
+                                <!-- Available Amenities Tags -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                                        Available Amenities:
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                            <i class="fa-solid fa-couch"></i> Unfurnished                                        </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Covered Parking                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> 24x7 Water                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Balcony                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Solar Water                                            </span>
+                                                                                                                            <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px; color:var(--text-muted);">
+                                                +1 more
+                                            </span>
+                                                                            </div>
+                                </div>
+
+                                <!-- Reasons for the match breakdown -->
+                                <div class="match-reasons-box">
+                                    <div class="match-reasons-title">
+                                        <i class="fa-solid fa-sparkles"></i> Why this flat matches you:
+                                    </div>
+                                    <ul class="match-reasons-list">
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Matches preferred accommodation type: Flat</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Includes essential amenities: Covered Parking, 24x7 Water, Balcony, Solar Water, Lift</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Furnishing status: Unfurnished</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Student friendly: Bachelors and students are welcome (No family restrictions)</span>
+                                            </li>
+                                                                            </ul>
+                                </div>
+
+                                <!-- Action Buttons: View Details & Add to Wishlist -->
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color);">
+                                    <a href="property-details.php?id=11" class="btn btn-secondary btn-sm" style="flex:1;">
+                                        <i class="fa-solid fa-eye"></i> View Details
+                                    </a>
+                                    
+                                    <button type="button" class="wishlist-toggle-btn  ideal-wishlist-action" data-id="11" title="Add to Wishlist">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span class="wishlist-label">Wishlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="property-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="property-img-wrapper">
+                                <img src="assets/images/properties/prop4.svg" alt="Comfort Living ÔÇô Punawale" loading="lazy">
+                                
+                                                                    <span class="urgent-badge"><i class="fa-solid fa-bolt"></i> Urgent Vacancy</span>
+                                                                
+                                <span class="type-pill">Flat</span>
+
+                                <!-- Quick heart toggle on card image -->
+                                <button type="button" class="save-btn " data-id="4" title="Add to Wishlist">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+
+                            <div class="property-details">
+                                <!-- Top Row: Match Score & Location -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                    <span class="match-score-pill fair">
+                                        <i class="fa-solid fa-circle-check"></i> 45% Match
+                                    </span>
+                                    <div class="property-location" style="margin-bottom:0; font-size:0.85rem;">
+                                        <i class="fa-solid fa-location-dot"></i> Punawale, Pune
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="property-title" style="font-size:1.15rem; margin-bottom:8px;">
+                                    <a href="property-details.php?id=4" style="color:var(--primary);">
+                                        Comfort Living ÔÇô Punawale                                    </a>
+                                </h3>
+
+                                <!-- Rent Display -->
+                                <div class="property-price" style="margin-bottom:10px;">
+                                    ₹16,500 <span>/ month</span>
+                                    <span style="font-size:0.75rem; color:var(--secondary); background:var(--secondary-light); padding:2px 8px; border-radius:12px; margin-left:8px; font-weight:700;">
+                                        Zero Brokerage
+                                    </span>
+                                </div>
+
+                                <!-- Available Amenities Tags -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                                        Available Amenities:
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                            <i class="fa-solid fa-couch"></i> Semi-Furnished                                        </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Geyser                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Lift                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Gym                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Swimming Pool                                            </span>
+                                                                                                                            <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px; color:var(--text-muted);">
+                                                +2 more
+                                            </span>
+                                                                            </div>
+                                </div>
+
+                                <!-- Reasons for the match breakdown -->
+                                <div class="match-reasons-box">
+                                    <div class="match-reasons-title">
+                                        <i class="fa-solid fa-sparkles"></i> Why this flat matches you:
+                                    </div>
+                                    <ul class="match-reasons-list">
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Matches preferred accommodation type: Flat</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Includes essential amenities: Geyser, Lift, Gym, Swimming Pool, Car Parking, Security Guard</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Furnishing status: Semi-Furnished</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Student friendly: Bachelors and students are welcome (No family restrictions)</span>
+                                            </li>
+                                                                            </ul>
+                                </div>
+
+                                <!-- Action Buttons: View Details & Add to Wishlist -->
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color);">
+                                    <a href="property-details.php?id=4" class="btn btn-secondary btn-sm" style="flex:1;">
+                                        <i class="fa-solid fa-eye"></i> View Details
+                                    </a>
+                                    
+                                    <button type="button" class="wishlist-toggle-btn  ideal-wishlist-action" data-id="4" title="Add to Wishlist">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span class="wishlist-label">Wishlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="property-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="property-img-wrapper">
+                                <img src="assets/images/properties/prop1.svg" alt="Green View Apartment ÔÇô Tathawade" loading="lazy">
+                                
+                                                                    <span class="urgent-badge"><i class="fa-solid fa-bolt"></i> Urgent Vacancy</span>
+                                                                
+                                <span class="type-pill">Flat</span>
+
+                                <!-- Quick heart toggle on card image -->
+                                <button type="button" class="save-btn " data-id="1" title="Add to Wishlist">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+
+                            <div class="property-details">
+                                <!-- Top Row: Match Score & Location -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                    <span class="match-score-pill fair">
+                                        <i class="fa-solid fa-circle-check"></i> 45% Match
+                                    </span>
+                                    <div class="property-location" style="margin-bottom:0; font-size:0.85rem;">
+                                        <i class="fa-solid fa-location-dot"></i> Tathawade, Pune
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="property-title" style="font-size:1.15rem; margin-bottom:8px;">
+                                    <a href="property-details.php?id=1" style="color:var(--primary);">
+                                        Green View Apartment ÔÇô Tathawade                                    </a>
+                                </h3>
+
+                                <!-- Rent Display -->
+                                <div class="property-price" style="margin-bottom:10px;">
+                                    ₹18,000 <span>/ month</span>
+                                    <span style="font-size:0.75rem; color:var(--secondary); background:var(--secondary-light); padding:2px 8px; border-radius:12px; margin-left:8px; font-weight:700;">
+                                        Zero Brokerage
+                                    </span>
+                                </div>
+
+                                <!-- Available Amenities Tags -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                                        Available Amenities:
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                            <i class="fa-solid fa-couch"></i> Semi-Furnished                                        </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> WiFi                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Geyser                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Lift                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Power Backup                                            </span>
+                                                                                                                            <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px; color:var(--text-muted);">
+                                                +2 more
+                                            </span>
+                                                                            </div>
+                                </div>
+
+                                <!-- Reasons for the match breakdown -->
+                                <div class="match-reasons-box">
+                                    <div class="match-reasons-title">
+                                        <i class="fa-solid fa-sparkles"></i> Why this flat matches you:
+                                    </div>
+                                    <ul class="match-reasons-list">
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Matches preferred accommodation type: Flat</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Includes essential amenities: WiFi, Geyser, Lift, Power Backup, Covered Parking, Security Guard</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Furnishing status: Semi-Furnished</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Student friendly: Bachelors and students are welcome (No family restrictions)</span>
+                                            </li>
+                                                                            </ul>
+                                </div>
+
+                                <!-- Action Buttons: View Details & Add to Wishlist -->
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color);">
+                                    <a href="property-details.php?id=1" class="btn btn-secondary btn-sm" style="flex:1;">
+                                        <i class="fa-solid fa-eye"></i> View Details
+                                    </a>
+                                    
+                                    <button type="button" class="wishlist-toggle-btn  ideal-wishlist-action" data-id="1" title="Add to Wishlist">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span class="wishlist-label">Wishlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="property-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="property-img-wrapper">
+                                <img src="assets/images/properties/prop2.svg" alt="Sunshine PG ÔÇô Wakad" loading="lazy">
+                                
+                                                                    <span class="urgent-badge"><i class="fa-solid fa-bolt"></i> Urgent Vacancy</span>
+                                                                
+                                <span class="type-pill">PG</span>
+
+                                <!-- Quick heart toggle on card image -->
+                                <button type="button" class="save-btn " data-id="2" title="Add to Wishlist">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+
+                            <div class="property-details">
+                                <!-- Top Row: Match Score & Location -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                    <span class="match-score-pill fair">
+                                        <i class="fa-solid fa-circle-check"></i> 40% Match
+                                    </span>
+                                    <div class="property-location" style="margin-bottom:0; font-size:0.85rem;">
+                                        <i class="fa-solid fa-location-dot"></i> Wakad, Pune
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="property-title" style="font-size:1.15rem; margin-bottom:8px;">
+                                    <a href="property-details.php?id=2" style="color:var(--primary);">
+                                        Sunshine PG ÔÇô Wakad                                    </a>
+                                </h3>
+
+                                <!-- Rent Display -->
+                                <div class="property-price" style="margin-bottom:10px;">
+                                    ₹7,500 <span>/ month</span>
+                                    <span style="font-size:0.75rem; color:var(--secondary); background:var(--secondary-light); padding:2px 8px; border-radius:12px; margin-left:8px; font-weight:700;">
+                                        Zero Brokerage
+                                    </span>
+                                </div>
+
+                                <!-- Available Amenities Tags -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                                        Available Amenities:
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                            <i class="fa-solid fa-couch"></i> Fully Furnished                                        </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> WiFi                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Food Included                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> RO Water                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Housekeeping                                            </span>
+                                                                                                                            <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px; color:var(--text-muted);">
+                                                +2 more
+                                            </span>
+                                                                            </div>
+                                </div>
+
+                                <!-- Reasons for the match breakdown -->
+                                <div class="match-reasons-box">
+                                    <div class="match-reasons-title">
+                                        <i class="fa-solid fa-sparkles"></i> Why this flat matches you:
+                                    </div>
+                                    <ul class="match-reasons-list">
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Convenient adjacent locality: Located in Wakad (easy commute to Baner)</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Includes essential amenities: WiFi, Food Included, RO Water, Housekeeping, Washing Machine, CCTV</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Furnishing status: Fully Furnished</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Student friendly: Bachelors and students are welcome (No family restrictions)</span>
+                                            </li>
+                                                                            </ul>
+                                </div>
+
+                                <!-- Action Buttons: View Details & Add to Wishlist -->
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color);">
+                                    <a href="property-details.php?id=2" class="btn btn-secondary btn-sm" style="flex:1;">
+                                        <i class="fa-solid fa-eye"></i> View Details
+                                    </a>
+                                    
+                                    <button type="button" class="wishlist-toggle-btn  ideal-wishlist-action" data-id="2" title="Add to Wishlist">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span class="wishlist-label">Wishlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="property-card" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+                            <div class="property-img-wrapper">
+                                <img src="assets/images/properties/prop7.svg" alt="Happy Homes ÔÇô Wakad" loading="lazy">
+                                
+                                                                
+                                <span class="type-pill">Flat</span>
+
+                                <!-- Quick heart toggle on card image -->
+                                <button type="button" class="save-btn " data-id="7" title="Add to Wishlist">
+                                    <i class="fa-solid fa-heart"></i>
+                                </button>
+                            </div>
+
+                            <div class="property-details">
+                                <!-- Top Row: Match Score & Location -->
+                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+                                    <span class="match-score-pill fair">
+                                        <i class="fa-solid fa-circle-check"></i> 40% Match
+                                    </span>
+                                    <div class="property-location" style="margin-bottom:0; font-size:0.85rem;">
+                                        <i class="fa-solid fa-location-dot"></i> Wakad, Pune
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="property-title" style="font-size:1.15rem; margin-bottom:8px;">
+                                    <a href="property-details.php?id=7" style="color:var(--primary);">
+                                        Happy Homes ÔÇô Wakad                                    </a>
+                                </h3>
+
+                                <!-- Rent Display -->
+                                <div class="property-price" style="margin-bottom:10px;">
+                                    ₹20,000 <span>/ month</span>
+                                    <span style="font-size:0.75rem; color:var(--secondary); background:var(--secondary-light); padding:2px 8px; border-radius:12px; margin-left:8px; font-weight:700;">
+                                        Zero Brokerage
+                                    </span>
+                                </div>
+
+                                <!-- Available Amenities Tags -->
+                                <div style="margin-bottom: 12px;">
+                                    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                                        Available Amenities:
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                            <i class="fa-solid fa-couch"></i> Fully Furnished                                        </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Beds                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Wardrobes                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Fridge                                            </span>
+                                                                                    <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px;">
+                                                <i class="fa-solid fa-check" style="color:var(--secondary);"></i> Geyser                                            </span>
+                                                                                                                            <span class="amenity-tag" style="font-size:0.75rem; padding:3px 8px; color:var(--text-muted);">
+                                                +3 more
+                                            </span>
+                                                                            </div>
+                                </div>
+
+                                <!-- Reasons for the match breakdown -->
+                                <div class="match-reasons-box">
+                                    <div class="match-reasons-title">
+                                        <i class="fa-solid fa-sparkles"></i> Why this flat matches you:
+                                    </div>
+                                    <ul class="match-reasons-list">
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Convenient adjacent locality: Located in Wakad (easy commute to Baner)</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Matches preferred accommodation type: Flat</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Includes essential amenities: Beds, Wardrobes, Fridge, Geyser, Gas Pipeline, Lift, Parking</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>Furnishing status: Fully Furnished</span>
+                                            </li>
+                                                                                    <li>
+                                                <i class="fa-solid fa-check-circle"></i>
+                                                <span>⚠️ Notice: Listed as Family Only by owner</span>
+                                            </li>
+                                                                            </ul>
+                                </div>
+
+                                <!-- Action Buttons: View Details & Add to Wishlist -->
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:auto; padding-top:12px; border-top:1px solid var(--border-color);">
+                                    <a href="property-details.php?id=7" class="btn btn-secondary btn-sm" style="flex:1;">
+                                        <i class="fa-solid fa-eye"></i> View Details
+                                    </a>
+                                    
+                                    <button type="button" class="wishlist-toggle-btn  ideal-wishlist-action" data-id="7" title="Add to Wishlist">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span class="wishlist-label">Wishlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                                    </div>
+                    </section>
+    </div>
+</main>
+
+<!-- Floating Toast Notification for Wishlist Actions -->
+<div id="toastNotification" class="toast-notice" style="display:none;">
+    <i class="fa-solid fa-circle-check" style="color:#5EEAD4;"></i>
+    <span id="toastMessage">Saved to your wishlist!</span>
+</div>
+
+<script>
+/**
+ * Interactive Step-by-step Wizard Controller
+ */
+let currentStep = 1;
+const totalSteps = 3;
+
+function updateStepperUI() {
+    // Update step containers visibility
+    for (let i = 1; i <= totalSteps; i++) {
+        const stepContainer = document.getElementById('stepContainer' + i);
+        const indicator = document.getElementById('stepIndicator' + i);
+        
+        if (stepContainer) {
+            stepContainer.classList.toggle('active', i === currentStep);
+        }
+        
+        if (indicator) {
+            indicator.classList.remove('active', 'completed');
+            if (i === currentStep) {
+                indicator.classList.add('active');
+            } else if (i < currentStep) {
+                indicator.classList.add('completed');
+            }
+        }
+    }
+
+    // Update progress bar width
+    const progressBar = document.getElementById('stepperProgress');
+    if (progressBar) {
+        const percentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+        progressBar.style.width = percentage + '%';
+    }
+
+    // Update buttons visibility
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitWizardBtn');
+
+    if (prevBtn) prevBtn.style.display = (currentStep > 1) ? 'inline-flex' : 'none';
+    if (nextBtn) nextBtn.style.display = (currentStep < totalSteps) ? 'inline-flex' : 'none';
+    if (submitBtn) submitBtn.style.display = (currentStep === totalSteps) ? 'inline-flex' : 'none';
+}
+
+function validateCurrentStep(step) {
+    if (step === 1) {
+        const budgetInput = document.getElementById('budgetInput');
+        const budgetVal = parseInt(budgetInput.value, 10);
+        if (isNaN(budgetVal) || budgetVal < 1000) {
+            alert('Please enter a valid monthly rent budget of at least ₹1,000.');
+            budgetInput.focus();
+            return false;
+        }
+        
+        const sharingChecked = document.querySelector('input[name="sharing"]:checked');
+        if (!sharingChecked) {
+            alert('Please select whether you prefer a single or shared room.');
+            return false;
+        }
+    } else if (step === 2) {
+        const typeChecked = document.querySelector('input[name="type"]:checked');
+        if (!typeChecked) {
+            alert('Please select a preferred accommodation type.');
+            return false;
+        }
+    } else if (step === 3) {
+        const furnishChecked = document.querySelector('input[name="furnishing"]:checked');
+        if (!furnishChecked) {
+            alert('Please choose your furnishing preference.');
+            return false;
+        }
+    }
+    return true;
+}
+
+function navigateStep(direction) {
+    if (direction > 0) {
+        if (!validateCurrentStep(currentStep)) return;
+    }
+    
+    const newStep = currentStep + direction;
+    if (newStep >= 1 && newStep <= totalSteps) {
+        currentStep = newStep;
+        updateStepperUI();
+    }
+}
+
+function jumpToStep(targetStep) {
+    if (targetStep < currentStep) {
+        currentStep = targetStep;
+        updateStepperUI();
+    } else if (targetStep > currentStep) {
+        // Validate preceding step
+        if (validateCurrentStep(currentStep)) {
+            currentStep = targetStep;
+            updateStepperUI();
+        }
+    }
+}
+
+function resetWizard() {
+    document.getElementById('idealFlatForm').reset();
+    document.getElementById('budgetSlider').value = 10000;
+    document.getElementById('budgetInput').value = 10000;
+    document.getElementById('budgetDisplay').innerText = '₹10,000';
+    
+    // Reset preset chips active state
+    document.querySelectorAll('.budget-chip').forEach(c => c.classList.remove('active'));
+    
+    // Check default radios
+    const defSharing = document.querySelector('input[name="sharing"][value="any"]');
+    if (defSharing) defSharing.checked = true;
+
+    const defType = document.querySelector('input[name="type"][value="Any"]');
+    if (defType) defType.checked = true;
+
+    const defFurnish = document.querySelector('input[name="furnishing"][value="Any"]');
+    if (defFurnish) defFurnish.checked = true;
+
+    const defLoc = document.getElementById('localitySelect');
+    if (defLoc) defLoc.value = 'Any';
+
+    currentStep = 1;
+    updateStepperUI();
+
+    showToast('Wizard reset to student default preferences.');
+}
+
+function relaxFiltersAndRetry() {
+    const budgetInput = document.getElementById('budgetInput');
+    const budgetSlider = document.getElementById('budgetSlider');
+    const localitySelect = document.getElementById('localitySelect');
+    
+    // Increase budget by ₹4,000 and select Any Locality
+    const newBudget = Math.max(12000, parseInt(budgetInput.value, 10) + 4000);
+    budgetInput.value = newBudget;
+    budgetSlider.value = newBudget;
+    document.getElementById('budgetDisplay').innerText = '₹' + newBudget.toLocaleString('en-IN');
+    
+    if (localitySelect) localitySelect.value = 'Any';
+    
+    // Uncheck rare amenities
+    document.querySelectorAll('input[name="amenities[]"]').forEach(cb => {
+        if (cb.value === 'AC' || cb.value === 'Attached Washroom') {
+            cb.checked = false;
+        }
+    });
+
+    // Submit form automatically
+    document.getElementById('idealFlatForm').submit();
+}
+
+// Synchronize Budget Slider & Input
+document.addEventListener('DOMContentLoaded', function () {
+    const slider = document.getElementById('budgetSlider');
+    const input = document.getElementById('budgetInput');
+    const display = document.getElementById('budgetDisplay');
+    const chips = document.querySelectorAll('.budget-chip');
+
+    function syncBudget(val) {
+        val = parseInt(val, 10) || 10000;
+        slider.value = val;
+        input.value = val;
+        display.innerText = '₹' + val.toLocaleString('en-IN');
+
+        chips.forEach(chip => {
+            if (parseInt(chip.getAttribute('data-amount'), 10) === val) {
+                chip.classList.add('active');
+            } else {
+                chip.classList.remove('active');
+            }
+        });
+    }
+
+    if (slider && input) {
+        slider.addEventListener('input', function () {
+            syncBudget(this.value);
+        });
+
+        input.addEventListener('input', function () {
+            syncBudget(this.value);
+        });
+
+        chips.forEach(chip => {
+            chip.addEventListener('click', function () {
+                const amt = this.getAttribute('data-amount');
+                syncBudget(amt);
+            });
+        });
+    }
+
+    // Interactive Wishlist Buttons (AJAX toggle)
+    initWishlistButtons();
+});
+
+function initWishlistButtons() {
+    const wishlistBtns = document.querySelectorAll('.ideal-wishlist-action');
+    wishlistBtns.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const propId = this.getAttribute('data-id');
+            toggleWishlist(propId, this);
+        });
+    });
+}
+
+function toggleWishlist(propId, btnElem) {
+    if (!propId) return;
+
+    fetch('save-property.php?id=' + encodeURIComponent(propId), {
+        method: 'GET',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            const icon = btnElem.querySelector('i');
+            const label = btnElem.querySelector('.wishlist-label');
+            const cardSaveBtn = btnElem.closest('.property-card')?.querySelector('.save-btn');
+
+            if (data.saved) {
+                btnElem.classList.add('saved');
+                if (icon) {
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid');
+                }
+                if (label) label.innerText = 'Wishlisted';
+                if (cardSaveBtn) cardSaveBtn.classList.add('active');
+                showToast('Property added to your wishlist!');
+            } else {
+                btnElem.classList.remove('saved');
+                if (icon) {
+                    icon.classList.remove('fa-solid');
+                    icon.classList.add('fa-regular');
+                }
+                if (label) label.innerText = 'Wishlist';
+                if (cardSaveBtn) cardSaveBtn.classList.remove('active');
+                showToast('Property removed from your wishlist.');
+            }
+        } else if (data.redirect) {
+            window.location.href = data.redirect;
+        } else {
+            alert(data.message || 'Could not update wishlist.');
+        }
+    })
+    .catch(err => {
+        console.error('Wishlist error:', err);
+    });
+}
+
+function showToast(message) {
+    const toast = document.getElementById('toastNotification');
+    const msgElem = document.getElementById('toastMessage');
+    if (toast && msgElem) {
+        msgElem.innerText = message;
+        toast.style.display = 'flex';
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3200);
+    }
+}
+</script>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <!-- Brand Column -->
+            <div class="footer-brand">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <div style="width:34px; height:34px; background:var(--secondary); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff;">
+                        <i class="fa-solid fa-house-chimney"></i>
+                    </div>
+                    <span style="font-size:1.4rem; font-weight:800; color:#fff;">Flat<span style="color:var(--secondary);">Connect</span></span>
+                </div>
+                <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+                    Direct Flat, PG & Roommate Finder. Connecting property owners, existing tenants, and accommodation seekers directly without middlemen or brokerage.
+                </p>
+                <div style="font-size:0.85rem; color:#A0AEC0;">
+                    <i class="fa-solid fa-bolt" style="color:var(--secondary);"></i> <strong>Tagline:</strong> Find a place. Find a roommate. Connect directly.
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="properties.php?type=Flat"><i class="fa-solid fa-angle-right"></i> Flats in Pune</a></li>
+                    <li><a href="properties.php?type=PG"><i class="fa-solid fa-angle-right"></i> PGs & Hostels</a></li>
+                    <li><a href="properties.php?type=Room"><i class="fa-solid fa-angle-right"></i> Private Rooms</a></li>
+                    <li><a href="ideal-flat.php"><i class="fa-solid fa-wand-magic-sparkles"></i> Find My Ideal Flat</a></li>
+                    <li><a href="roommates.php"><i class="fa-solid fa-angle-right"></i> Roommate Finder</a></li>
+                    <li><a href="replacement.php"><i class="fa-solid fa-angle-right"></i> Tenant Replacement</a></li>
+                </ul>
+            </div>
+
+            <!-- Pune Localities -->
+            <div class="footer-col">
+                <h4>Top Localities</h4>
+                <ul class="footer-links">
+                    <li><a href="properties.php?location=Hinjewadi"><i class="fa-solid fa-location-dot"></i> Hinjewadi (Phase 1-3)</a></li>
+                    <li><a href="properties.php?location=Wakad"><i class="fa-solid fa-location-dot"></i> Wakad</a></li>
+                    <li><a href="properties.php?location=Tathawade"><i class="fa-solid fa-location-dot"></i> Tathawade</a></li>
+                    <li><a href="properties.php?location=Baner"><i class="fa-solid fa-location-dot"></i> Baner</a></li>
+                    <li><a href="properties.php?location=Punawale"><i class="fa-solid fa-location-dot"></i> Punawale</a></li>
+                    <li><a href="properties.php?location=Pimpri"><i class="fa-solid fa-location-dot"></i> Pimpri</a></li>
+                </ul>
+            </div>
+
+            <!-- Why FlatConnect -->
+            <div class="footer-col">
+                <h4>Platform Promise</h4>
+                <ul class="footer-links" style="font-size:0.9rem;">
+                    <li style="margin-bottom:10px;"><i class="fa-solid fa-check" style="color:var(--secondary);"></i> 100% Zero Brokerage</li>
+                    <li style="margin-bottom:10px;"><i class="fa-solid fa-check" style="color:var(--secondary);"></i> Direct Owner & Tenant Chat</li>
+                    <li style="margin-bottom:10px;"><i class="fa-solid fa-check" style="color:var(--secondary);"></i> Clear Bachelor Allowed Status</li>
+                    <li style="margin-bottom:10px;"><i class="fa-solid fa-check" style="color:var(--secondary);"></i> Verified Urgent Vacancies</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 FlatConnect. Direct Flat, PG & Roommate Finder. Built with PHP & MySQL.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- FlatConnect Main JavaScript -->
+<script src="assets/js/main.js"></script>
+</body>
+</html>
